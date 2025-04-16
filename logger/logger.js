@@ -22,8 +22,10 @@
 //   transports: [new transports.Console()],
 // })
 
+// For Jest
+// require('dotenv').config()
+
 // Third Example
-require('dotenv').config()
 
 require('winston-daily-rotate-file')
 require('winston-mongodb')

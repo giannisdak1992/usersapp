@@ -35,6 +35,7 @@ function verifyAccessToken(token) {
 
 async function googleAuth(code) {
   console.log('Google login')
+  console.log(code)
   const CLIENT_ID = process.env.GOOGLE_CLIENT_ID
   const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
   const REDIRECT_URI = process.env.REDIRECT_URI
@@ -45,6 +46,7 @@ async function googleAuth(code) {
     //Exchange code for tokens
 
     const { tokens } = await oauth2Client.getToken(code) // get the token
+    console.log('Step 1', tokens)
     oauth2Client.setCredentials(tokens) // verify that is a google token
 
     const ticket = await oauth2Client.verifyIdToken({
@@ -52,12 +54,12 @@ async function googleAuth(code) {
       idToken: tokens.id_token,
       audience: CLIENT_ID,
     })
-
+    console.log('Step 2')
     const userInfo = await ticket.getPayload() //get the payload from the token
     console.log('Google User', userInfo)
     return { user: userInfo, tokens }
   } catch (err) {
-    console.log('Error in google authentication', error)
+    console.log('Error in google authentication', err)
     return { error: 'Failed to authenticate with google' }
   }
 }

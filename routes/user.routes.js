@@ -6,7 +6,7 @@ const verifyToken = require('../middlewares/auth.middleware').verifyToken
 const verifyRoles = require('../middlewares/auth.middleware').verifyRoles
 
 router.get('/', verifyToken, userController.findAll) //calling the findAll
-router.get('/:username', userController.findOne)
+router.get('/:username', verifyToken, userController.findOne)
 router.post('/', verifyToken, verifyRoles('ADMIN'), userController.create)
 router.patch(
   '/:username',
